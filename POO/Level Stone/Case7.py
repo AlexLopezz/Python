@@ -105,7 +105,10 @@ class Deposito:
     def totalPriceAllProducts(self):
             total= 0 
             for product in self.almacen:
-                total+= product.getPrecio()
+                if product.getPromocion() == True:
+                    total+= product.getPrecio() - (product.getPrecio() * 0.1)
+                else: 
+                    total+= product.getPrecio()
             return total
     
     #Calcula el precio total de una marca de bebida.
@@ -114,6 +117,8 @@ class Deposito:
             for product in self.almacen:
                 if marca == product.getMarca():
                     total+=product.getPrecio()
+                elif marca == product.getMarca() and product.getPromocion() == True:
+                    total+= product.getPrecio() - (product.getPrecio() * 0.1)
             return total
 
     #Info del deposito.
@@ -128,6 +133,7 @@ def menuAndDecision():
         print("ERROR: Usted debe ingresar una opcion correcta.(Solo se permite numeros, no caracteres.)\n")
     else:
         return decision
+        
 def promocion(strPromocion):
     if strPromocion.lower() == 'si':
         return True
